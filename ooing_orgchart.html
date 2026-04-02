@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOING — Organization Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #181818;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8e6e1;
+  --text2: #888780;
+  --text3: #4a4945;
+  --font: 'Instrument Sans', -apple-system, sans-serif;
+
+  --c-purple: #7B72D8;
+  --c-purple-bg: rgba(123,114,216,0.12);
+  --c-gray: #888780;
+  --c-gray-bg: rgba(136,135,128,0.1);
+  --c-blue: #5B9BD5;
+  --c-blue-bg: rgba(91,155,213,0.12);
+  --c-teal: #3DB894;
+  --c-teal-bg: rgba(61,184,148,0.12);
+  --c-amber: #D4944A;
+  --c-amber-bg: rgba(212,148,74,0.12);
+  --c-pink: #C96B8A;
+  --c-pink-bg: rgba(201,107,138,0.12);
+  --c-green: #72A84E;
+  --c-green-bg: rgba(114,168,78,0.12);
+  --c-coral: #C97B5A;
+  --c-coral-bg: rgba(201,123,90,0.12);
+}
+
+html { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; }
+body { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+
+/* HEADER */
+.header { margin-bottom: 2.5rem; }
+.brand { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+.title { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+.subtitle { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* TABS */
+.tab-row { display: flex; gap: 6px; margin-bottom: 2rem; }
+.tab-btn {
+  font-size: 12px; font-weight: 500; font-family: var(--font);
+  padding: 6px 16px; border-radius: 99px;
+  border: 0.5px solid var(--border2);
+  background: transparent; color: var(--text2);
+  cursor: pointer; transition: all .15s;
+}
+.tab-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+.tab-btn.active { background: var(--text); color: var(--bg); border-color: transparent; }
+
+/* VIEW */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ORG TREE */
+.org-wrap { overflow-x: auto; padding-bottom: 1rem; }
+.org-tree { display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 700px; }
+
+.level { display: flex; justify-content: center; align-items: flex-start; gap: 16px; position: relative; }
+.level + .level { margin-top: 0; }
+
+/* CONNECTOR LINES */
+.connector-v {
+  width: 0.5px; background: var(--border2);
+  margin: 0 auto;
+}
+.connector-h-wrap {
+  display: flex; align-items: flex-start; position: relative;
+}
+.connector-h {
+  position: absolute; top: 0; height: 0.5px; background: var(--border2);
+}
+
+/* NODE CARD */
+.node {
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 140px;
+  text-align: center;
+  transition: border-color .15s, background .15s;
+  cursor: default;
+  position: relative;
+}
+.node:hover { border-color: var(--border2); }
+.node-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.node-role { font-size: 11px; }
+
+/* COLOR VARIANTS */
+.n-ceo    { background: var(--c-purple-bg); border-color: rgba(123,114,216,0.25); }
+.n-ceo    .node-name { color: #A89DE0; }
+.n-ceo    .node-role { color: rgba(168,157,224,0.7); }
+
+.n-coo    { background: var(--c-gray-bg); border-color: rgba(136,135,128,0.2); }
+.n-coo    .node-name { color: #B4B2A9; }
+.n-coo    .node-role { color: var(--text3); }
+
+.n-pm     { background: var(--c-blue-bg); border-color: rgba(91,155,213,0.2); }
+.n-pm     .node-name { color: #8BB8E0; }
+.n-pm     .node-role { color: rgba(139,184,224,0.65); }
+
+.n-pl     { background: var(--c-teal-bg); border-color: rgba(61,184,148,0.2); }
+.n-pl     .node-name { color: #6DCBAA; }
+.n-pl     .node-role { color: rgba(109,203,170,0.65); }
+
+.n-partner { background: var(--c-amber-bg); border-color: rgba(212,148,74,0.25); }
+.n-partner .node-name { color: #D4A06A; }
+.n-partner .node-role { color: rgba(212,160,106,0.65); }
+
+.n-design  { background: var(--c-pink-bg); border-color: rgba(201,107,138,0.2); }
+.n-design  .node-name { color: #D48AA4; }
+.n-design  .node-role { color: rgba(212,138,164,0.65); }
+
+.n-dev     { background: var(--c-green-bg); border-color: rgba(114,168,78,0.2); }
+.n-dev     .node-name { color: #96BE72; }
+.n-dev     .node-role { color: rgba(150,190,114,0.65); }
+
+.n-content { background: var(--c-coral-bg); border-color: rgba(201,123,90,0.2); }
+.n-content .node-name { color: #D49A7A; }
+.n-content .node-role { color: rgba(212,154,122,0.65); }
+
+.n-channel { background: var(--c-gray-bg); border-color: rgba(136,135,128,0.15); }
+.n-channel .node-name { color: #B4B2A9; }
+.n-channel .node-role { color: var(--text3); }
+
+/* SECTION DIVIDER */
+.section-div {
+  display: flex; align-items: center; gap: 12px;
+  margin: 2rem 0 1.5rem; width: 100%;
+}
+.section-div span {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); white-space: nowrap;
+}
+.section-div::before, .section-div::after {
+  content: ''; flex: 1; height: 0.5px; background: var(--border);
+}
+
+/* FLAT VIEW */
+.flat-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.flat-level { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.flat-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin: 20px 0 10px; text-align: center; }
+
+/* CHANNEL VIEW */
+.ch-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ch-col {
+  border: 0.5px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+.ch-header {
+  padding: 12px 16px; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border-bottom: 0.5px solid var(--border);
+}
+.ch-b2b  .ch-header { color: var(--c-blue);  background: var(--c-blue-bg); }
+.ch-b2c  .ch-header { color: var(--c-teal);  background: var(--c-teal-bg); }
+.ch-cre  .ch-header { color: var(--c-pink);  background: var(--c-pink-bg); }
+.ch-body { padding: 12px; background: var(--bg2); display: flex; flex-direction: column; gap: 8px; }
+.ch-item {
+  border: 0.5px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+  background: var(--bg3);
+  transition: border-color .15s;
+}
+.ch-item:hover { border-color: var(--border2); }
+.ch-item-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.ch-item-desc { font-size: 11px; color: var(--text2); }
+
+.coo-bar {
+  margin-top: 16px;
+  border: 0.5px dashed var(--border2);
+  border-radius: 10px; padding: 12px 16px;
+  text-align: center; background: var(--c-gray-bg);
+}
+.coo-bar .node-name { font-size: 13px; font-weight: 600; color: #B4B2A9; margin-bottom: 2px; }
+.coo-bar .node-role { font-size: 11px; color: var(--text3); }
+
+/* LEGEND */
+.legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+/* FOOTER */
+.footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); font-size: 11px; color: var(--text3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">OOING K-Beauty Export</div>
+  <div class="title">조직도 — AI Team Structure</div>
+  <div class="subtitle">우연정 Angela · CEO &amp; Founder</div>
+</header>
+
+<div class="tab-row">
+  <button class="tab-btn active" onclick="show('v1',this)">계층형</button>
+  <button class="tab-btn" onclick="show('v2',this)">플랫형</button>
+  <button class="tab-btn" onclick="show('v3',this)">채널형</button>
+</div>
+
+<!-- V1: 계층형 -->
+<div id="v1" class="view active">
+  <div class="org-wrap">
+    <div class="org-tree">
+
+      <div class="level">
+        <div class="node n-ceo" style="min-width:180px">
+          <div class="node-name">우연정 Angela</div>
+          <div class="node-role">CEO · 대표</div>
+        </div>
+      </div>
+
+      <div class="connector-v" style="height:24px"></div>
+
+      <div class="level">
+        <div class="node n-coo" style="min-width:160px">
+          <div class="node-name">루나 (Luna)</div>
+          <div class="node-role">COO · 운영총괄</div>
+        </div>
+      </div>
+
+      <div class="connector-v" style="height:24px"></div>
+
+      <div style="display:flex; justify-content:center; gap:16px; align-items:flex-start">
+
+        <div style="display:flex; flex-direction:column; align-items:center">
+          <div class="node n-pm" style="min-width:150px">
+            <div class="node-name">아라 (Ara)</div>
+            <div class="node-role">PM · 프로젝트매니저</div>
+          </div>
+          <div class="connector-v" style="height:20px"></div>
+          <div style="display:flex; gap:10px">
+            <div class="node n-design" style="min-width:120px">
+              <div class="node-name">비비 (Vivi)</div>
+              <div class="node-role">Designer</div>
+            </div>
+            <div class="node n-dev" style="min-width:120px">
+              <div class="node-name">코드 (Code)</div>
+              <div class="node-role">Developer</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center">
+          <div class="node n-pl" style="min-width:150px">
+            <div class="node-name">이든 (Eden)</div>
+            <div class="node-role">PL · 프로젝트리더</div>
+          </div>
+          <div class="connector-v" style="height:20px"></div>
+          <div style="display:flex; gap:10px">
+            <div class="node n-content" style="min-width:120px">
+              <div class="node-name">소라 (Sora)</div>
+              <div class="node-role">Content</div>
+            </div>
+            <div class="node n-pm" style="min-width:120px">
+              <div class="node-name">아이 (Ai)</div>
+              <div class="node-role">Strategy</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center">
+          <div class="node n-partner" style="min-width:150px">
+            <div class="node-name">Mine Cosmetic</div>
+            <div class="node-role">파트너사 · MUUUNI</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-div"><span>채널 담당</span></div>
+
+      <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap">
+        <div class="node n-channel" style="min-width:140px">
+          <div class="node-name">알리 (Ali)</div>
+          <div class="node-role">Alibaba.com B2B</div>
+        </div>
+        <div class="node n-channel" style="min-width:140px">
+          <div class="node-name">아마존 (Amazon)</div>
+          <div class="node-role">Amazon FBA B2C</div>
+        </div>
+        <div class="node n-channel" style="min-width:140px">
+          <div class="node-name">틱 (Tik)</div>
+          <div class="node-role">TikTok Live</div>
+        </div>
+        <div class="node n-channel" style="min-width:140px">
+          <div class="node-name">인 (In)</div>
+          <div class="node-role">Instagram</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- V2: 플랫형 -->
+<div id="v2" class="view">
+  <div class="flat-wrap">
+    <div class="node n-ceo" style="min-width:180px; text-align:center">
+      <div class="node-name">우연정 Angela</div>
+      <div class="node-role">CEO · 대표</div>
+    </div>
+
+    <div class="flat-label">운영진</div>
+    <div class="flat-level">
+      <div class="node n-coo"><div class="node-name">루나</div><div class="node-role">COO</div></div>
+      <div class="node n-pm"><div class="node-name">아라</div><div class="node-role">PM</div></div>
+      <div class="node n-pl"><div class="node-name">이든</div><div class="node-role">PL</div></div>
+    </div>
+
+    <div class="flat-label">실무진</div>
+    <div class="flat-level">
+      <div class="node n-design"><div class="node-name">비비</div><div class="node-role">Designer</div></div>
+      <div class="node n-dev"><div class="node-name">코드</div><div class="node-role">Developer</div></div>
+      <div class="node n-content"><div class="node-name">소라</div><div class="node-role">Content</div></div>
+      <div class="node n-pm"><div class="node-name">아이</div><div class="node-role">Strategy</div></div>
+    </div>
+
+    <div class="flat-label">채널</div>
+    <div class="flat-level">
+      <div class="node n-channel"><div class="node-name">알리</div><div class="node-role">Alibaba B2B</div></div>
+      <div class="node n-channel"><div class="node-name">아마존</div><div class="node-role">Amazon B2C</div></div>
+      <div class="node n-channel"><div class="node-name">틱</div><div class="node-role">TikTok Live</div></div>
+      <div class="node n-channel"><div class="node-name">인</div><div class="node-role">Instagram</div></div>
+    </div>
+
+    <div class="flat-label">파트너사</div>
+    <div class="flat-level">
+      <div class="node n-partner" style="min-width:160px"><div class="node-name">Mine Cosmetic</div><div class="node-role">MUUUNI 파트너</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- V3: 채널형 -->
+<div id="v3" class="view">
+  <div style="text-align:center; margin-bottom:20px">
+    <div class="node n-ceo" style="display:inline-block; min-width:180px">
+      <div class="node-name">우연정 Angela</div>
+      <div class="node-role">CEO · 대표</div>
+    </div>
+  </div>
+
+  <div class="ch-wrap">
+    <div class="ch-col ch-b2b">
+      <div class="ch-header">B2B 채널</div>
+      <div class="ch-body">
+        <div class="ch-item">
+          <div class="ch-item-name">알리 (Ali)</div>
+          <div class="ch-item-desc">Alibaba.com · 수출 B2B</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">Mine Cosmetic</div>
+          <div class="ch-item-desc">MUUUNI 파트너사</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">아라 (Ara)</div>
+          <div class="ch-item-desc">PM · KSP 전략 담당</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-col ch-b2c">
+      <div class="ch-header">B2C 채널</div>
+      <div class="ch-body">
+        <div class="ch-item">
+          <div class="ch-item-name">아마존 (Amazon)</div>
+          <div class="ch-item-desc">Amazon FBA · 엑솜</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">틱 (Tik)</div>
+          <div class="ch-item-desc">TikTok Live · 콘텐츠</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">인 (In)</div>
+          <div class="ch-item-desc">Instagram · 브랜딩</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-col ch-cre">
+      <div class="ch-header">크리에이티브팀</div>
+      <div class="ch-body">
+        <div class="ch-item">
+          <div class="ch-item-name">비비 (Vivi)</div>
+          <div class="ch-item-desc">Designer</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">코드 (Code)</div>
+          <div class="ch-item-desc">Developer</div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-item-name">소라 (Sora)</div>
+          <div class="ch-item-desc">Content</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coo-bar" style="max-width:400px; margin:16px auto 0">
+    <div class="node-name">루나 (Luna) · COO</div>
+    <div class="node-role">전체 채널 조율 · 운영총괄</div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-purple)"></div>대표</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-gray)"></div>COO · 채널</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-blue)"></div>PM · 전략</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-teal)"></div>PL</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-amber)"></div>파트너사</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-pink)"></div>디자인</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-green)"></div>개발</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-coral)"></div>콘텐츠</div>
+</div>
+
+<footer class="footer">
+  <span>OOING AI Team · 우연정 Angela</span>
+  <span>2026.04 기준</span>
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
