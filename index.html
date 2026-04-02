@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOING — CEO Dashboard 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #181818;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8e6e1;
+  --text2: #888780;
+  --text3: #555450;
+  --accent: #d4d0c8;
+  --font: 'Instrument Sans', -apple-system, sans-serif;
+}
+
+html { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+body { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+/* HEADER */
+.header { margin-bottom: 3.5rem; border-bottom: 0.5px solid var(--border); padding-bottom: 2rem; }
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.brand { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+.name { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
+.subtitle { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.date-badge {
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text3); border: 0.5px solid var(--border); border-radius: 6px;
+  padding: 6px 12px; white-space: nowrap;
+}
+.stat-row { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.stat { }
+.stat-num { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+.stat-label { font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+/* SECTION */
+.section { margin-bottom: 3rem; }
+.section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+/* SKILL GRID */
+.skill-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+@media (max-width: 700px) { .skill-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.skill-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 14px;
+  transition: border-color .2s, background .2s;
+  cursor: default;
+}
+.skill-card:hover { border-color: var(--border2); background: var(--bg3); }
+.skill-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; margin-bottom: 10px; font-weight: 600;
+}
+.sk-strategy .skill-icon { background: rgba(24,95,165,0.18); color: #7BB3E0; }
+.sk-design .skill-icon   { background: rgba(133,79,11,0.18); color: #E0A95A; }
+.sk-dev .skill-icon      { background: rgba(59,109,17,0.18); color: #8DC05E; }
+.sk-biz .skill-icon      { background: rgba(153,53,86,0.18); color: #D882A0; }
+.sk-ops .skill-icon      { background: rgba(15,110,86,0.18); color: #5CC4A4; }
+
+.skill-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.skill-tag { display: block; font-size: 11px; color: var(--text2); line-height: 1.8; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 22px; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 5px; top: 10px; bottom: 10px;
+  width: 0.5px; background: var(--border);
+}
+.tl-item {
+  position: relative; margin-bottom: 20px;
+  padding: 14px 16px;
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  transition: border-color .15s;
+}
+.tl-item:hover { border-color: var(--border2); }
+.tl-item::before {
+  content: ''; position: absolute;
+  left: -19px; top: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid currentColor;
+  background: var(--bg);
+}
+.tl-item.cat-strategy::before { color: #7BB3E0; }
+.tl-item.cat-design::before   { color: #E0A95A; }
+.tl-item.cat-dev::before      { color: #8DC05E; }
+.tl-item.cat-biz::before      { color: #D882A0; }
+.tl-item.cat-ops::before      { color: #5CC4A4; }
+.tl-item.cat-mkt::before      { color: #A89DE0; }
+
+.tl-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tl-date { font-size: 11px; color: var(--text3); letter-spacing: 0.04em; }
+.tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 4px 0 3px; }
+.tl-desc  { font-size: 12px; color: var(--text2); }
+
+.cat-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+  padding: 3px 8px; border-radius: 99px; white-space: nowrap;
+}
+.badge-strategy { background: rgba(24,95,165,0.15); color: #7BB3E0; border: 0.5px solid rgba(24,95,165,0.25); }
+.badge-design   { background: rgba(133,79,11,0.15); color: #E0A95A; border: 0.5px solid rgba(133,79,11,0.25); }
+.badge-dev      { background: rgba(59,109,17,0.15); color: #8DC05E; border: 0.5px solid rgba(59,109,17,0.25); }
+.badge-biz      { background: rgba(153,53,86,0.15); color: #D882A0; border: 0.5px solid rgba(153,53,86,0.25); }
+.badge-ops      { background: rgba(15,110,86,0.15); color: #5CC4A4; border: 0.5px solid rgba(15,110,86,0.25); }
+.badge-mkt      { background: rgba(83,58,183,0.15); color: #A89DE0; border: 0.5px solid rgba(83,58,183,0.25); }
+
+/* INVESTMENT NOTE */
+.tl-amount {
+  font-size: 11px; color: var(--text3); margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ROADMAP */
+.roadmap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 700px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.rm-col {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+.rm-header {
+  padding: 11px 14px; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border-bottom: 0.5px solid var(--border);
+}
+.rm-q1 .rm-header { color: #7BB3E0; }
+.rm-q2 .rm-header { color: #E0A95A; background: rgba(133,79,11,0.07); }
+.rm-q3 .rm-header { color: #8DC05E; }
+.rm-q4 .rm-header { color: #D882A0; }
+.rm-now { color: #E0A95A; }
+
+.rm-body { padding: 12px 14px; }
+.rm-item {
+  display: flex; align-items: flex-start; gap: 7px;
+  margin-bottom: 9px; font-size: 12px; color: var(--text2); line-height: 1.5;
+}
+.rm-item:last-child { margin-bottom: 0; }
+.rm-dot {
+  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+  background: var(--border2);
+}
+.rm-item.done .rm-dot   { background: #5CC4A4; }
+.rm-item.active .rm-dot { background: #E0A95A; }
+.rm-item.done   { color: var(--text3); }
+.rm-item.active { color: var(--text); font-weight: 500; }
+
+.current-marker {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #E0A95A; margin-bottom: 16px;
+  letter-spacing: 0.04em;
+}
+.current-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #E0A95A;
+  box-shadow: 0 0 0 3px rgba(224,169,90,0.2);
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 4rem; padding-top: 1.5rem;
+  border-top: 0.5px solid var(--border);
+  font-size: 11px; color: var(--text3);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div>
+      <div class="brand">OOING K-Beauty Export</div>
+      <div class="name">우연정 · Angela</div>
+      <div class="subtitle">CEO &amp; Founder — Strategy · Brand · Development · Commerce</div>
+    </div>
+    <div class="date-badge">2026.04 기준</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-num">16개월</div>
+      <div class="stat-label">사업 운영</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2채널</div>
+      <div class="stat-label">활성 플랫폼</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$5K+</div>
+      <div class="stat-label">플랫폼 투자</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5가지</div>
+      <div class="stat-label">핵심 역량</div>
+    </div>
+  </div>
+</header>
+
+<!-- SKILL MAP -->
+<section class="section">
+  <div class="section-label">역량 맵</div>
+  <div class="skill-grid">
+    <div class="skill-card sk-strategy">
+      <div class="skill-icon">◈</div>
+      <div class="skill-name">전략 / 기획</div>
+      <span class="skill-tag">채널 전략 수립</span>
+      <span class="skill-tag">플랫폼 선택</span>
+      <span class="skill-tag">사업 기획</span>
+      <span class="skill-tag">로드맵 설계</span>
+    </div>
+    <div class="skill-card sk-design">
+      <div class="skill-icon">▲</div>
+      <div class="skill-name">브랜드 / 디자인</div>
+      <span class="skill-tag">Photoshop · Illustrator</span>
+      <span class="skill-tag">브랜드 아이덴티티</span>
+      <span class="skill-tag">제품 비주얼</span>
+      <span class="skill-tag">마케팅 디자인</span>
+    </div>
+    <div class="skill-card sk-dev">
+      <div class="skill-icon">⌨</div>
+      <div class="skill-name">개발</div>
+      <span class="skill-tag">HTML · CSS 반응형</span>
+      <span class="skill-tag">jQuery · PHP</span>
+      <span class="skill-tag">웹사이트 구축</span>
+      <span class="skill-tag">Stitch · Figma</span>
+    </div>
+    <div class="skill-card sk-biz">
+      <div class="skill-icon">◉</div>
+      <div class="skill-name">비즈니스</div>
+      <span class="skill-tag">알리바바 B2B</span>
+      <span class="skill-tag">아마존 FBA B2C</span>
+      <span class="skill-tag">파트너십 관리</span>
+      <span class="skill-tag">수출 실무</span>
+    </div>
+    <div class="skill-card sk-ops">
+      <div class="skill-icon">▶</div>
+      <div class="skill-name">마케팅 / 운영</div>
+      <span class="skill-tag">틱톡 라이브</span>
+      <span class="skill-tag">SNS 콘텐츠</span>
+      <span class="skill-tag">채널 운영</span>
+      <span class="skill-tag">셀러 교육 이수</span>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <div class="section-label">히스토리</div>
+  <div class="current-marker"><span class="current-dot"></span>현재 위치 — 2026년 4월</div>
+  <div class="timeline">
+
+    <div class="tl-item cat-biz">
+      <div class="tl-top">
+        <div class="tl-date">2025.01.30</div>
+        <span class="cat-badge badge-biz">비즈니스</span>
+      </div>
+      <div class="tl-title">개인사업자 등록</div>
+      <div class="tl-desc">OOING 공식 출발점. 법적 주체로서의 사업 시작.</div>
+    </div>
+
+    <div class="tl-item cat-strategy">
+      <div class="tl-top">
+        <div class="tl-date">2025.12.23</div>
+        <span class="cat-badge badge-strategy">전략</span>
+      </div>
+      <div class="tl-title">알리바바닷컴 입점 결제 완료</div>
+      <div class="tl-desc">GGS Plus 12개월 플랜 + 광고 예산 포함. K-뷰티 B2B 수출 채널 확보.</div>
+      <div class="tl-amount">투자 금액: USD $4,999</div>
+    </div>
+
+    <div class="tl-item cat-mkt">
+      <div class="tl-top">
+        <div class="tl-date">2026.01.01</div>
+        <span class="cat-badge badge-mkt">마케팅</span>
+      </div>
+      <div class="tl-title">틱톡 라이브 방송 시작</div>
+      <div class="tl-desc">K-뷰티 콘텐츠 채널 런칭. B2C 직접 소통 채널 개설.</div>
+    </div>
+
+    <div class="tl-item cat-strategy">
+      <div class="tl-top">
+        <div class="tl-date">2026.01.17</div>
+        <span class="cat-badge badge-strategy">전략</span>
+      </div>
+      <div class="tl-title">아마존 버니스쿨 4기 결제 + 오프라인 수업 참석</div>
+      <div class="tl-desc">새벽 1시 결제 후 당일 오전 10시 오프라인 수업 참석. 엑솜(Exosome) 브랜드 아마존 런칭 프로젝트 착수.</div>
+    </div>
+
+    <div class="tl-item cat-biz">
+      <div class="tl-top">
+        <div class="tl-date">2026.02.10 — 24</div>
+        <span class="cat-badge badge-biz">비즈니스</span>
+      </div>
+      <div class="tl-title">미국 출장 (2주)</div>
+      <div class="tl-desc">현지 K-뷰티 시장 리서치 및 비즈니스 개발. 글로벌 시장 직접 체험.</div>
+    </div>
+
+    <div class="tl-item cat-ops">
+      <div class="tl-top">
+        <div class="tl-date">2026.03</div>
+        <span class="cat-badge badge-ops">운영</span>
+      </div>
+      <div class="tl-title">다산씨앤텍 방문 (발산역)</div>
+      <div class="tl-desc">아마존 파트너사 미팅. 엑솜 런칭 협업 논의.</div>
+    </div>
+
+    <div class="tl-item cat-strategy">
+      <div class="tl-top">
+        <div class="tl-date">2026.03.27</div>
+        <span class="cat-badge badge-strategy">전략</span>
+      </div>
+      <div class="tl-title">알리바바 KSP 추가 결제</div>
+      <div class="tl-desc">Key Success Program 전담 팀 온보딩. 스토어 고도화 본격화.</div>
+    </div>
+
+    <div class="tl-item cat-dev" style="border-color: rgba(224,169,90,0.3);">
+      <div class="tl-top">
+        <div class="tl-date">2026.04 — 진행 중</div>
+        <span class="cat-badge badge-dev">개발</span>
+      </div>
+      <div class="tl-title">OOING 웹사이트 기획 · 디자인 착수</div>
+      <div class="tl-desc">Stitch로 Ooing Noir 컨셉 설계. Landing Page / Product Detail / Catalog / About 구성. HTML 구현 예정.</div>
+    </div>
+
+    <div class="tl-item cat-ops" style="border-color: rgba(224,169,90,0.3);">
+      <div class="tl-top">
+        <div class="tl-date">2026.04.01</div>
+        <span class="cat-badge badge-ops">운영</span>
+      </div>
+      <div class="tl-title">알리바바 코리아 KSP 미팅</div>
+      <div class="tl-desc">KSP 매니저 서윤지 팀 방문. 스토어 셋업 전략 수립.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section">
+  <div class="section-label">2026 로드맵</div>
+  <div class="roadmap-grid">
+    <div class="rm-col rm-q1">
+      <div class="rm-header">Q1 완료 ✓</div>
+      <div class="rm-body">
+        <div class="rm-item done"><span class="rm-dot"></span>알리바바 입점 완료</div>
+        <div class="rm-item done"><span class="rm-dot"></span>틱톡 채널 런칭</div>
+        <div class="rm-item done"><span class="rm-dot"></span>버니스쿨 4기 참여</div>
+        <div class="rm-item done"><span class="rm-dot"></span>미국 출장 완료</div>
+        <div class="rm-item done"><span class="rm-dot"></span>KSP 팀 온보딩</div>
+        <div class="rm-item done"><span class="rm-dot"></span>다산씨앤텍 미팅</div>
+      </div>
+    </div>
+    <div class="rm-col rm-q2">
+      <div class="rm-header rm-now">Q2 ← 지금</div>
+      <div class="rm-body">
+        <div class="rm-item active"><span class="rm-dot"></span>알리바바 스토어 셋업</div>
+        <div class="rm-item active"><span class="rm-dot"></span>OOING 웹사이트 구축</div>
+        <div class="rm-item"><span class="rm-dot"></span>엑솜 아마존 런칭</div>
+        <div class="rm-item"><span class="rm-dot"></span>MUUUNI 리스팅 완성</div>
+        <div class="rm-item"><span class="rm-dot"></span>종합소득세 신고 (5월)</div>
+        <div class="rm-item"><span class="rm-dot"></span>USPTO 상표 출원</div>
+      </div>
+    </div>
+    <div class="rm-col rm-q3">
+      <div class="rm-header">Q3</div>
+      <div class="rm-body">
+        <div class="rm-item"><span class="rm-dot"></span>알리바바 첫 바이어 확보</div>
+        <div class="rm-item"><span class="rm-dot"></span>아마존 Brand Registry</div>
+        <div class="rm-item"><span class="rm-dot"></span>PPC 광고 최적화</div>
+        <div class="rm-item"><span class="rm-dot"></span>틱톡 콘텐츠 체계화</div>
+        <div class="rm-item"><span class="rm-dot"></span>OOING 웹사이트 런칭</div>
+      </div>
+    </div>
+    <div class="rm-col rm-q4">
+      <div class="rm-header">Q4</div>
+      <div class="rm-body">
+        <div class="rm-item"><span class="rm-dot"></span>수출 첫 매출 목표</div>
+        <div class="rm-item"><span class="rm-dot"></span>아마존 Vine 리뷰</div>
+        <div class="rm-item"><span class="rm-dot"></span>전시회 / 박람회 검토</div>
+        <div class="rm-item"><span class="rm-dot"></span>OOING 브랜드 확장</div>
+        <div class="rm-item"><span class="rm-dot"></span>2027 전략 설계</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>OOING CEO Dashboard · 우연정 Angela</span>
+  <span>2026.04 기준 — 지속 업데이트</span>
+</footer>
+
+</body>
+</html>
