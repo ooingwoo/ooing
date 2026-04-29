@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUUUNI | OOING Multi-Brand Exporter</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0a0a0a;--white:#f8f6f3;--cream:#f0ece4;--gold:#c9a96e;--gold-light:#e8d5b0;--gray:#888;--gray-light:#ddd;--dark-gray:#333}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--gray-light);display:flex;align-items:center;justify-content:space-between;padding:14px 40px}
+.logo-wrap{display:flex;align-items:center;gap:14px}
+.logo-ooing{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:var(--black)}
+.logo-divider{width:1px;height:22px;background:var(--gray-light)}
+.logo-sub{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray);line-height:1.4}
+.header-badge{background:var(--black);color:var(--white);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px}
+
+/* HERO */
+.hero{position:relative;height:560px;background:linear-gradient(135deg,#1a1a1a 0%,#2d1f1f 50%,#1a1a1a 100%);overflow:hidden;display:flex;align-items:center}
+.hero-bg-text{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:260px;color:rgba(255,255,255,0.03);letter-spacing:-10px;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.hero-content{position:relative;z-index:2;padding:0 80px;max-width:600px}
+.hero-tag{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;margin-bottom:24px}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;color:var(--white);line-height:1.1;margin-bottom:16px}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-desc{color:rgba(255,255,255,0.55);font-size:13px;line-height:1.8;letter-spacing:0.5px;margin-bottom:32px}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--black);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;padding:13px 28px;text-decoration:none;font-weight:500;transition:all 0.3s}
+.hero-cta:hover{background:var(--gold-light)}
+.hero-visual{position:absolute;right:0;top:0;bottom:0;width:52%;background:linear-gradient(to right,#1a1a1a,transparent 20%),url('https://images.unsplash.com/photo-1583241800698-e8ab01830a22?w=800&q=80') center/cover;opacity:0.6}
+.hero-stats{position:absolute;bottom:36px;right:60px;display:flex;gap:40px;z-index:3}
+.stat{text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);font-weight:300;display:block}
+.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+
+/* FLAGS */
+.flags-bar{background:#faf8f2;border-top:1px solid #e8e0d0;border-bottom:1px solid #e8e0d0;overflow:hidden;padding:16px 0}
+.flags-inner{overflow:hidden;width:100%}
+.flags-track{display:flex;gap:32px;width:max-content;animation:flagScroll 60s linear infinite}
+.flags-track:hover{animation-play-state:paused}
+.flag-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.flag-item span{font-size:28px;line-height:1}
+.flag-item p{font-size:10px;letter-spacing:0.5px;color:#888;white-space:nowrap;font-family:'DM Sans',sans-serif}
+@keyframes flagScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION COMMON */
+section{padding:90px 60px}
+.section-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--black);margin-bottom:50px;line-height:1.15}
+
+/* BRANDS */
+.brands-section{background:var(--cream)}
+.brands-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.brand-card{background:var(--white);padding:40px 32px;position:relative;overflow:hidden;transition:transform 0.3s}
+.brand-card:hover{transform:translateY(-4px)}
+.brand-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.brand-card.coming-soon{border:2px dashed var(--gray-light);background:transparent}
+.brand-card.coming-soon::before{background:var(--gray-light)}
+.brand-card-tag{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+.brand-card.coming-soon .brand-card-tag{color:var(--gray)}
+.brand-card-name{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:4px;color:var(--black);margin-bottom:10px}
+.brand-card.coming-soon .brand-card-name{color:var(--gray)}
+.brand-card-desc{font-size:12px;color:var(--gray);line-height:1.8;margin-bottom:20px}
+.brand-card-products{display:flex;flex-wrap:wrap;gap:6px}
+.product-chip{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--gray-light);padding:4px 10px;color:var(--dark-gray)}
+.product-chip.gold{border-color:var(--gold);color:var(--gold)}
+.cs-badge{display:inline-block;background:var(--black);color:var(--white);font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:6px 16px;margin-top:16px}
+
+/* PRODUCTS */
+.products-section{background:var(--white)}
+.products-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.product-item{text-align:center;padding:28px 16px;border:1px solid var(--gray-light);transition:all 0.3s}
+.product-item:hover{border-color:var(--gold);background:var(--cream)}
+.product-icon{font-size:32px;margin-bottom:14px;display:block}
+.product-name{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark-gray);line-height:1.5}
+
+/* ABOUT */
+.about-section{background:var(--black);color:var(--white)}
+.about-section .section-title{color:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about-text p{font-size:13px;line-height:2;color:rgba(255,255,255,0.65);margin-bottom:16px}
+.about-highlight{border-left:2px solid var(--gold);padding-left:20px;margin:28px 0}
+.about-highlight p{font-family:'Cormorant Garamond',serif;font-size:20px!important;font-style:italic;color:var(--gold-light)!important;line-height:1.6!important}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.feature-item{padding:24px;border:1px solid rgba(255,255,255,0.1)}
+.feature-icon{font-size:20px;margin-bottom:10px;display:block}
+.feature-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.feature-desc{font-size:11px;color:rgba(255,255,255,0.45);line-height:1.7}
+
+/* HISTORY */
+.history-section{background:var(--cream)}
+.timeline{position:relative;padding-left:40px;max-width:700px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--gold)}
+.timeline-item{position:relative;margin-bottom:40px;padding-left:20px}
+.timeline-item::before{content:'';position:absolute;left:-44px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.timeline-year{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--gold);margin-bottom:6px}
+.timeline-content{font-size:13px;color:var(--dark-gray);line-height:1.8}
+
+/* CERTIFICATE */
+.cert-section{background:var(--white)}
+.cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cert-item{border:1px solid var(--gray-light);padding:28px 20px;text-align:center;transition:all 0.3s}
+.cert-item:hover{border-color:var(--gold)}
+.cert-icon{font-size:36px;margin-bottom:12px}
+.cert-name{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark-gray);line-height:1.5}
+
+/* TEAM */
+.team-section{background:var(--black);color:var(--white)}
+.team-section .section-title{color:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.team-card{border:1px solid rgba(255,255,255,0.1);padding:32px;position:relative;overflow:hidden}
+.team-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+.team-card:hover::after{transform:scaleX(1)}
+.team-role{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.team-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);margin-bottom:8px;font-weight:300}
+.team-desc{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7}
+
+/* LASH COMING SOON */
+.lash-coming{background:var(--white);padding:90px 60px;position:relative;overflow:hidden}
+.lash-coming::before{content:'COMING SOON';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:180px;color:rgba(0,0,0,0.03);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:20px}
+.lash-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.lash-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;margin-bottom:20px;color:var(--black)}
+.lash-title em{font-style:italic;color:var(--gold)}
+.lash-desc{font-size:13px;color:var(--gray);line-height:1.9;margin-bottom:32px}
+.lash-lines{display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.lash-line{display:flex;align-items:center;gap:14px;padding:14px 20px;border:1px solid var(--gray-light)}
+.lash-line-icon{font-size:20px}
+.lash-line-name{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dark-gray);margin-bottom:2px}
+.lash-line-sub{font-size:10px;color:var(--gray)}
+.lash-line-tag{margin-left:auto;font-size:8px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--gray-light);padding:4px 10px;color:var(--gray)}
+.lash-notify{display:flex;max-width:380px}
+.lash-notify input{flex:1;border:1px solid var(--gray-light);border-right:none;padding:12px 16px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;background:var(--white);color:var(--black)}
+.lash-notify input::placeholder{color:var(--gray)}
+.lash-notify button{background:var(--black);color:var(--white);border:none;padding:12px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.3s;white-space:nowrap}
+.lash-notify button:hover{background:var(--gold);color:var(--black)}
+.lash-visual-box{aspect-ratio:4/5;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.lash-visual-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(201,169,110,0.15),transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(201,169,110,0.08),transparent 50%)}
+.lash-placeholder{text-align:center;position:relative;z-index:2}
+.lash-placeholder-icon{font-size:80px;display:block;margin-bottom:20px;opacity:0.6}
+.lash-placeholder-text{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:6px;color:var(--gold);display:block;margin-bottom:8px}
+.lash-placeholder-sub{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase}
+.lash-corner-badge{position:absolute;top:20px;right:20px;background:var(--gold);color:var(--black);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;font-weight:500}
+
+/* CONTACT */
+.contact-section{background:var(--cream);display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0}
+.contact-left{padding:90px 70px;background:var(--black);color:var(--white)}
+.contact-left .section-title{color:var(--white)}
+.contact-right{padding:90px 70px}
+.contact-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.contact-item:last-child{border-bottom:none}
+.contact-icon{width:36px;height:36px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.contact-detail label{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.contact-detail p{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6}
+.contact-right-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--black);margin-bottom:12px}
+.contact-right p{font-size:13px;color:var(--gray);line-height:1.9;margin-bottom:32px}
+.inquiry-btn{display:inline-flex;align-items:center;gap:10px;background:var(--black);color:var(--white);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;padding:14px 30px;text-decoration:none;transition:all 0.3s}
+.inquiry-btn:hover{background:var(--gold);color:var(--black)}
+
+/* FOOTER */
+footer{background:var(--black);color:rgba(255,255,255,0.4);padding:32px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08)}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:var(--white)}
+.footer-text{font-size:10px;letter-spacing:1.5px;text-align:center}
+.footer-right{font-size:10px;letter-spacing:1px;text-align:right;line-height:1.8}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{animation:fadeUp 0.6s 0.1s both}
+.hero-title{animation:fadeUp 0.6s 0.25s both}
+.hero-desc{animation:fadeUp 0.6s 0.4s both}
+.hero-cta{animation:fadeUp 0.6s 0.55s both}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.brands-grid{grid-template-columns:1fr 1fr}.products-grid{grid-template-columns:repeat(3,1fr)}.cert-grid{grid-template-columns:repeat(2,1fr)}.lash-inner{grid-template-columns:1fr;gap:40px}.lash-visual-box{aspect-ratio:16/9}}
+@media(max-width:768px){header{padding:12px 20px}section{padding:60px 24px}.hero{height:auto;padding:60px 24px}.hero-content{padding:0;max-width:100%}.hero-title{font-size:38px}.hero-visual{display:none}.hero-stats{position:static;margin-top:40px;justify-content:center}.about-grid{grid-template-columns:1fr;gap:40px}.brands-grid{grid-template-columns:1fr}.products-grid{grid-template-columns:repeat(2,1fr)}.team-grid{grid-template-columns:1fr}.contact-section{grid-template-columns:1fr}.contact-left,.contact-right{padding:60px 24px}.lash-coming{padding:60px 24px}.lash-title{font-size:36px}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <span class="logo-ooing">OOING</span>
+    <div class="logo-divider"></div>
+    <div class="logo-sub">MUUUNI | OOING<br>Multi-Brand Exporter</div>
+  </div>
+  <div class="header-badge">K-Beauty Export</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">MUUUNI</div>
+  <div class="hero-content">
+    <span class="hero-tag">✦ K-Beauty Vegan Collection</span>
+    <h1 class="hero-title">Vegan<br><em>Lip Tint</em><br>by MUUUNI</h1>
+    <p class="hero-desc">FDA Registered · ISO 22716 · 104 Vegan Ingredients<br>Planetary Shades — 5 curated colors</p>
+    <a href="mailto:ooing.official@gmail.com" class="hero-cta">Request Wholesale Info →</a>
+  </div>
+  <div class="hero-visual"></div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Shades</span></div>
+    <div class="stat"><span class="stat-num">104</span><span class="stat-label">Vegan Ingredients</span></div>
+    <div class="stat"><span class="stat-num">B2B</span><span class="stat-label">Wholesale</span></div>
+  </div>
+</section>
+
+<!-- FLAGS -->
+<div class="flags-bar">
+  <div class="flags-inner">
+    <div class="flags-track">
+      <div class="flag-item"><span>🇩🇪</span><p>Deutsch</p></div>
+      <div class="flag-item"><span>🇵🇹</span><p>Português</p></div>
+      <div class="flag-item"><span>🇪🇸</span><p>Español</p></div>
+      <div class="flag-item"><span>🇫🇷</span><p>Français</p></div>
+      <div class="flag-item"><span>🇮🇹</span><p>Italiano</p></div>
+      <div class="flag-item"><span>🇷🇺</span><p>Русский</p></div>
+      <div class="flag-item"><span>🇰🇷</span><p>한국어</p></div>
+      <div class="flag-item"><span>🇯🇵</span><p>日本語</p></div>
+      <div class="flag-item"><span>🇸🇦</span><p>العربية</p></div>
+      <div class="flag-item"><span>🇹🇭</span><p>ภาษาไทย</p></div>
+      <div class="flag-item"><span>🇻🇳</span><p>tiếng Việt</p></div>
+      <div class="flag-item"><span>🇹🇷</span><p>Türk</p></div>
+      <div class="flag-item"><span>🇳🇱</span><p>Nederlands</p></div>
+      <div class="flag-item"><span>🇮🇩</span><p>Indonesian</p></div>
+      <div class="flag-item"><span>🇮🇱</span><p>עברית</p></div>
+      <div class="flag-item"><span>🇮🇳</span><p>हिंदी</p></div>
+      <div class="flag-item"><span>🇺🇸</span><p>English</p></div>
+      <div class="flag-item"><span>🇬🇧</span><p>British</p></div>
+      <div class="flag-item"><span>🇨🇳</span><p>中文</p></div>
+      <div class="flag-item"><span>🇦🇺</span><p>Australia</p></div>
+      <div class="flag-item"><span>🇧🇷</span><p>Brasil</p></div>
+      <div class="flag-item"><span>🇲🇾</span><p>Malaysia</p></div>
+      <div class="flag-item"><span>🇵🇭</span><p>Filipino</p></div>
+      <div class="flag-item"><span>🇸🇬</span><p>Singapore</p></div>
+      <div class="flag-item"><span>🇨🇦</span><p>Canada</p></div>
+      <div class="flag-item"><span>🇲🇽</span><p>México</p></div>
+      <div class="flag-item"><span>🇵🇱</span><p>Polski</p></div>
+      <div class="flag-item"><span>🇸🇪</span><p>Svenska</p></div>
+      <div class="flag-item"><span>🇳🇴</span><p>Norsk</p></div>
+      <div class="flag-item"><span>🇩🇰</span><p>Dansk</p></div>
+      <div class="flag-item"><span>🇫🇮</span><p>Suomi</p></div>
+      <div class="flag-item"><span>🇨🇭</span><p>Schweiz</p></div>
+      <div class="flag-item"><span>🇦🇹</span><p>Österreich</p></div>
+      <div class="flag-item"><span>🇧🇪</span><p>België</p></div>
+      <div class="flag-item"><span>🇬🇷</span><p>Ελληνικά</p></div>
+      <div class="flag-item"><span>🇨🇿</span><p>Čeština</p></div>
+      <div class="flag-item"><span>🇭🇺</span><p>Magyar</p></div>
+      <div class="flag-item"><span>🇷🇴</span><p>Română</p></div>
+      <div class="flag-item"><span>🇺🇦</span><p>Українська</p></div>
+      <div class="flag-item"><span>🇵🇰</span><p>اردو</p></div>
+      <div class="flag-item"><span>🇧🇩</span><p>বাংলা</p></div>
+      <div class="flag-item"><span>🇱🇰</span><p>Sri Lanka</p></div>
+      <div class="flag-item"><span>🇳🇿</span><p>New Zealand</p></div>
+      <div class="flag-item"><span>🇦🇷</span><p>Argentina</p></div>
+      <div class="flag-item"><span>🇨🇱</span><p>Chile</p></div>
+      <div class="flag-item"><span>🇨🇴</span><p>Colombia</p></div>
+      <!-- 2벌 무한루프용 -->
+      <div class="flag-item"><span>🇩🇪</span><p>Deutsch</p></div>
+      <div class="flag-item"><span>🇵🇹</span><p>Português</p></div>
+      <div class="flag-item"><span>🇪🇸</span><p>Español</p></div>
+      <div class="flag-item"><span>🇫🇷</span><p>Français</p></div>
+      <div class="flag-item"><span>🇮🇹</span><p>Italiano</p></div>
+      <div class="flag-item"><span>🇷🇺</span><p>Русский</p></div>
+      <div class="flag-item"><span>🇰🇷</span><p>한국어</p></div>
+      <div class="flag-item"><span>🇯🇵</span><p>日本語</p></div>
+      <div class="flag-item"><span>🇸🇦</span><p>العربية</p></div>
+      <div class="flag-item"><span>🇹🇭</span><p>ภาษาไทย</p></div>
+      <div class="flag-item"><span>🇻🇳</span><p>tiếng Việt</p></div>
+      <div class="flag-item"><span>🇹🇷</span><p>Türk</p></div>
+      <div class="flag-item"><span>🇳🇱</span><p>Nederlands</p></div>
+      <div class="flag-item"><span>🇮🇩</span><p>Indonesian</p></div>
+      <div class="flag-item"><span>🇮🇱</span><p>עברית</p></div>
+      <div class="flag-item"><span>🇮🇳</span><p>हिंदी</p></div>
+      <div class="flag-item"><span>🇺🇸</span><p>English</p></div>
+      <div class="flag-item"><span>🇬🇧</span><p>British</p></div>
+      <div class="flag-item"><span>🇨🇳</span><p>中文</p></div>
+      <div class="flag-item"><span>🇦🇺</span><p>Australia</p></div>
+      <div class="flag-item"><span>🇧🇷</span><p>Brasil</p></div>
+      <div class="flag-item"><span>🇲🇾</span><p>Malaysia</p></div>
+      <div class="flag-item"><span>🇵🇭</span><p>Filipino</p></div>
+      <div class="flag-item"><span>🇸🇬</span><p>Singapore</p></div>
+      <div class="flag-item"><span>🇨🇦</span><p>Canada</p></div>
+      <div class="flag-item"><span>🇲🇽</span><p>México</p></div>
+      <div class="flag-item"><span>🇵🇱</span><p>Polski</p></div>
+      <div class="flag-item"><span>🇸🇪</span><p>Svenska</p></div>
+      <div class="flag-item"><span>🇳🇴</span><p>Norsk</p></div>
+      <div class="flag-item"><span>🇩🇰</span><p>Dansk</p></div>
+      <div class="flag-item"><span>🇫🇮</span><p>Suomi</p></div>
+      <div class="flag-item"><span>🇨🇭</span><p>Schweiz</p></div>
+      <div class="flag-item"><span>🇦🇹</span><p>Österreich</p></div>
+      <div class="flag-item"><span>🇧🇪</span><p>België</p></div>
+      <div class="flag-item"><span>🇬🇷</span><p>Ελληνικά</p></div>
+      <div class="flag-item"><span>🇨🇿</span><p>Čeština</p></div>
+      <div class="flag-item"><span>🇭🇺</span><p>Magyar</p></div>
+      <div class="flag-item"><span>🇷🇴</span><p>Română</p></div>
+      <div class="flag-item"><span>🇺🇦</span><p>Українська</p></div>
+      <div class="flag-item"><span>🇵🇰</span><p>اردو</p></div>
+      <div class="flag-item"><span>🇧🇩</span><p>বাংলা</p></div>
+      <div class="flag-item"><span>🇱🇰</span><p>Sri Lanka</p></div>
+      <div class="flag-item"><span>🇳🇿</span><p>New Zealand</p></div>
+      <div class="flag-item"><span>🇦🇷</span><p>Argentina</p></div>
+      <div class="flag-item"><span>🇨🇱</span><p>Chile</p></div>
+      <div class="flag-item"><span>🇨🇴</span><p>Colombia</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS -->
+<section class="brands-section">
+  <p class="section-label">Our Portfolio</p>
+  <h2 class="section-title">Multi-Brand<br>Collection</h2>
+  <div class="brands-grid">
+    <div class="brand-card">
+      <span class="brand-card-tag">Active · K-Beauty</span>
+      <div class="brand-card-name">MUUUNI</div>
+      <p class="brand-card-desc">Seoul-born beauty brand committed to vegan formulation, mercury-free pigments, and effortless wearability. Every shade is crafted for real skin tones across all ethnicities.</p>
+      <div class="brand-card-products">
+        <span class="product-chip gold">Vegan Lip Tint</span>
+        <span class="product-chip gold">5 Shades</span>
+        <span class="product-chip">MOQ 1,000 pcs</span>
+        <span class="product-chip">OEM Available</span>
+      </div>
+    </div>
+    <div class="brand-card coming-soon">
+      <span class="brand-card-tag">Coming Soon · Eye Beauty</span>
+      <div class="brand-card-name">??? LASH</div>
+      <p class="brand-card-desc">A new K-beauty lash brand launching soon under OOING. Professional-grade lash extensions for salons and DIY cluster lashes for home use — crafted for Asian eye shapes and global appeal.</p>
+      <div class="brand-card-products">
+        <span class="product-chip">Cluster Lashes</span>
+        <span class="product-chip">Extension Lashes</span>
+        <span class="product-chip">B2B Salon Supply</span>
+      </div>
+      <div class="cs-badge">Launching 2025</div>
+    </div>
+    <div class="brand-card coming-soon">
+      <span class="brand-card-tag">Future Brand</span>
+      <div class="brand-card-name">TBD</div>
+      <p class="brand-card-desc">OOING is continuously expanding its K-beauty portfolio. New brand announcements coming soon. Contact us for early partnership opportunities.</p>
+      <div class="brand-card-products">
+        <span class="product-chip">Skincare</span>
+        <span class="product-chip">Hair Care</span>
+        <span class="product-chip">Body Care</span>
+      </div>
+      <div class="cs-badge">In Development</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT CATEGORY -->
+<section class="products-section">
+  <p class="section-label">Product Category</p>
+  <h2 class="section-title">What We Offer</h2>
+  <div class="products-grid">
+    <div class="product-item"><span class="product-icon">💄</span><p class="product-name">Vegan<br>Lip Tint</p></div>
+    <div class="product-item"><span class="product-icon">🌿</span><p class="product-name">Water<br>Wrapping</p></div>
+    <div class="product-item"><span class="product-icon">💧</span><p class="product-name">Water<br>Wrapping Oil</p></div>
+    <div class="product-item"><span class="product-icon">🌸</span><p class="product-name">Plate<br>Wrapping</p></div>
+    <div class="product-item"><span class="product-icon">✨</span><p class="product-name">Mercury<br>Mousse</p></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <p class="section-label">About Us</p>
+  <h2 class="section-title">OOING &<br>MUUUNI</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>OOING is a Seoul-based multi-brand exporter company founded in January 2025, dedicated to bringing the highest Korean cosmetics brands to global markets.</p>
+      <p>We operate as a curated multi-brand exporter — carefully selecting brands that meet the highest standards in formulation, certification, and design.</p>
+      <div class="about-highlight"><p>"Beauty should feel weightless, pure, and effortless. MUUUNI is our commitment to that vision."</p></div>
+      <p>MUUUNI is a Seoul beauty brand built on the belief that beauty should feel weightless, pure, and effortless. Every product is formulated with CB Blending Technology to balance function and sensation.</p>
+    </div>
+    <div class="about-features">
+      <div class="feature-item"><span class="feature-icon">🔬</span><div class="feature-title">Formulation</div><p class="feature-desc">CB Blending Technology. 104 vegan ingredients. Mercury-free pigments certified.</p></div>
+      <div class="feature-item"><span class="feature-icon">📋</span><div class="feature-title">Certified</div><p class="feature-desc">ISO 22716 GMP, FDA Registered, CPNP compliant for global markets.</p></div>
+      <div class="feature-item"><span class="feature-icon">🌍</span><div class="feature-title">Global Reach</div><p class="feature-desc">Exporting to 20+ countries through Alibaba.com B2B platform.</p></div>
+      <div class="feature-item"><span class="feature-icon">🤝</span><div class="feature-title">OEM / ODM</div><p class="feature-desc">Custom formulation and private label available for qualified buyers.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="history-section">
+  <p class="section-label">Development History</p>
+  <h2 class="section-title">Our Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-year">2025 Q1</div><p class="timeline-content">OOING Co., Ltd. founded in Seoul, Korea. Established multi-brand export framework with Alibaba.com B2B platform integration.</p></div>
+    <div class="timeline-item"><div class="timeline-year">2025 Q2</div><p class="timeline-content">Partnered with MUUUNI (Mine Cosmetic) for K-Beauty lip tint product distribution. Coco Cosmetic confirmed as primary manufacturing partner.</p></div>
+    <div class="timeline-item"><div class="timeline-year">2025 Q3</div><p class="timeline-content">Lash brand development initiated. Expanding product portfolio into eye beauty category with professional and DIY lash lines.</p></div>
+    <div class="timeline-item"><div class="timeline-year">2025 —</div><p class="timeline-content">Ongoing expansion into new K-beauty categories. Building partnerships across skincare, hair care, and body care segments.</p></div>
+  </div>
+</section>
+
+<!-- CERTIFICATE -->
+<section class="cert-section">
+  <p class="section-label">Our Certificate</p>
+  <h2 class="section-title">Quality Assurance</h2>
+  <div class="cert-grid">
+    <div class="cert-item"><div class="cert-icon">🏅</div><p class="cert-name">ISO 22716<br>GMP Certified</p></div>
+    <div class="cert-item"><div class="cert-icon">🇺🇸</div><p class="cert-name">FDA<br>Registered</p></div>
+    <div class="cert-item"><div class="cert-icon">🇪🇺</div><p class="cert-name">CPNP<br>EU Compliant</p></div>
+    <div class="cert-item"><div class="cert-icon">🌿</div><p class="cert-name">Vegan<br>Certified</p></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <p class="section-label">Team</p>
+  <h2 class="section-title">The People<br>Behind OOING</h2>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-role">CEO · OOING</div><div class="team-name">Angela Woo</div><p class="team-desc">Driving strategy and U.S. market expansion for OOING. Overseeing brand partnerships and international distribution growth.</p></div>
+    <div class="team-card"><div class="team-role">Brand Partner · MUUUNI</div><div class="team-name">Kang Namhyuk</div><p class="team-desc">CEO of Mine Cosmetic (MUUUNI). The vision behind MUUUNI's formulation philosophy and brand identity.</p></div>
+    <div class="team-card"><div class="team-role">Manufacturing Partner</div><div class="team-name">Coco Cosmetic</div><p class="team-desc">OEM-accredited specialist in K-beauty product manufacturing. Ensuring quality standards from formulation to final packaging.</p></div>
+    <div class="team-card"><div class="team-role">Company · Seoul, Korea</div><div class="team-name">OOING Co., Ltd.</div><p class="team-desc">Driving brand distribution sales and market growth. Building strong distribution channels and trade partnerships globally.</p></div>
+  </div>
+</section>
+
+<!-- LASH COMING SOON -->
+<section class="lash-coming">
+  <div class="lash-inner">
+    <div class="lash-left">
+      <p class="section-label">New Brand · Coming Soon</p>
+      <h2 class="lash-title">K-Beauty<br><em>Lash Line</em><br>by OOING</h2>
+      <p class="lash-desc">A professional lash brand crafted for Asian eye shapes — and loved globally. Two product lines: salon-grade extension lashes for technicians, and DIY cluster lashes for home beauty enthusiasts.</p>
+      <div class="lash-lines">
+        <div class="lash-line">
+          <span class="lash-line-icon">👁️</span>
+          <div><div class="lash-line-name">Cluster Lash Line</div><div class="lash-line-sub">DIY · Home use · Asian eye shape optimized</div></div>
+          <span class="lash-line-tag">B2C / B2B</span>
+        </div>
+        <div class="lash-line">
+          <span class="lash-line-icon">✂️</span>
+          <div><div class="lash-line-name">Extension Lash Line</div><div class="lash-line-sub">Professional · Salon supply · Technician grade</div></div>
+          <span class="lash-line-tag">B2B Salon</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--gray);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;">Get notified at launch</p>
+      <div class="lash-notify">
+        <input type="email" placeholder="your@email.com">
+        <button onclick="alert('Thank you! We will notify you at launch.')">Notify Me</button>
+      </div>
+    </div>
+    <div class="lash-right">
+      <div class="lash-visual-box">
+        <div class="lash-corner-badge">Coming Soon</div>
+        <div class="lash-placeholder">
+          <span class="lash-placeholder-icon">👁️</span>
+          <span class="lash-placeholder-text">Lash Brand</span>
+          <span class="lash-placeholder-sub">Under Development</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <div class="contact-left">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Contact<br>Us</h2>
+    <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-detail"><label>Address</label><p>Seoul, Republic of Korea</p></div></div>
+    <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-detail"><label>Phone</label><p>+82 10 9041 5550</p></div></div>
+    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-detail"><label>Email</label><p>ooing.official@gmail.com</p></div></div>
+    <div class="contact-item"><div class="contact-icon">🌐</div><div class="contact-detail"><label>Website</label><p>ooing-official.github.io/ooing</p></div></div>
+  </div>
+  <div class="contact-right">
+    <h3 class="contact-right-title">Ready to source<br>K-Beauty products?</h3>
+    <p>We welcome wholesale inquiries, OEM partnerships, and distribution requests. Our team will respond within 24 hours. Minimum order quantities and pricing available upon request.</p>
+    <a href="mailto:ooing.official@gmail.com" class="inquiry-btn">Send Inquiry →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">OOING</div>
+  <div class="footer-text">© 2025 OOING Co., Ltd. All rights reserved.<br>MUUUNI | OOING Multi-Brand Exporter</div>
+  <div class="footer-right">Seoul, Republic of Korea<br>ooing.official@gmail.com</div>
+</footer>
+
+</body>
+</html>
